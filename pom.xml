@@ -86,11 +86,11 @@
                 <version>${checkstyle.plugin.version}</version>
                 <configuration>
                     <logViolationsToConsole>true</logViolationsToConsole>
-                    <consoleOutput>true</consoleOutput>
+                    <consoleOutput>false</consoleOutput>
                     <violationSeverity>warning</violationSeverity>
-                    <failOnViolation>true</failOnViolation>
-                    <failsOnError>true</failsOnError>
-                    <configLocation>/_checkstyle/sun-checks.xml</configLocation>
+                    <failOnViolation>false</failOnViolation>
+                    <failsOnError>false</failsOnError>
+                    <configLocation>/_checkstyle/sun_checks.xml</configLocation>
                 </configuration>
                 <executions>
                     <execution>

@@ -1,10 +1,10 @@
 package ru.ryatronth.service.desk.data.address;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public enum AddressPriority {
     LOW("Низкий"),
     NORMAL("Нормальный"),
