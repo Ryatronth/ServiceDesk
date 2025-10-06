@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum AddressPriority {
+public enum TicketPriority {
     LOW("Низкий"),
     NORMAL("Нормальный"),
     HIGH("Высокий"),

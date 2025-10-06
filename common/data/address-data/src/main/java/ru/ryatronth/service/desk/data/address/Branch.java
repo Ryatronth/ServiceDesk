@@ -14,40 +14,42 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-@Table(name = "address_document")
 @Entity
+@Table(name = "branch")
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class AddressDocument {
+@AllArgsConstructor
+public class Branch {
 
     @Id
     @GeneratedValue
     private UUID id;
 
-    @Column(name = "address_id", nullable = false)
-    private UUID addressId;
+    @Column(name = "parent_id")
+    private UUID parentId;
 
-    @Column(name = "file_name", nullable = false)
-    private String fileName;
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    @Column(name = "content_type")
-    private String contentType;
+    @Column(name = "address")
+    private String address;
 
-    @Column(name = "file_size")
-    private Long fileSize;
+    @Column(name = "contact_info")
+    private String contactInfo;
 
-    @Column(name = "storage_path", nullable = false)
-    private String storagePath;
-
-    @Column(name = "created_by", nullable = false)
-    private UUID createdBy;
+    @Column(name = "manager_id", nullable = false)
+    private UUID managerId;
 
     @CreationTimestamp
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false)
     private Instant createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private Instant updatedAt;
 
 }

@@ -18,22 +18,19 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.envers.Audited;
 
 @Audited
-@Table(name = "address_comment")
+@Table(name = "ticket_comment")
 @Entity
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddressComment {
+public class TicketComment {
 
     @Id
     @GeneratedValue
     @Column(name = "id")
     private UUID id;
-
-    @Column(name = "read", nullable = false)
-    private boolean read;
 
     @Column(name = "address_id", nullable = false)
     private UUID addressId;
