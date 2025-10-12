@@ -14,8 +14,10 @@
     <modules>
         <module>persona-module</module>
         <module>notification-module</module>
-        <module>route-module</module>
         <module>security-module</module>
+        <module>branch-module</module>
+        <module>ticket-module</module>
+        <module>statistic-module</module>
     </modules>
 
     <properties>

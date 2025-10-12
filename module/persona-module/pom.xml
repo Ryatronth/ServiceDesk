@@ -17,4 +17,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>ru.ryatronth.service.desk</groupId>
+            <artifactId>persona-data</artifactId>
+            <version>${revision}</version>
+        </dependency>
+    </dependencies>
+
 </project>

@@ -5,66 +5,62 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>ru.ryatronth.service.desk</groupId>
-        <artifactId>common</artifactId>
+        <artifactId>service</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>data</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>ticket-data</module>
-        <module>notification-data</module>
-        <module>persona-data</module>
-        <module>branch-data</module>
-        <module>statistic-data</module>
-    </modules>
+    <artifactId>ticket-service</artifactId>
 
     <properties>
         <maven.compiler.source>24</maven.compiler.source>
         <maven.compiler.target>24</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <hypersistence-utils-hibernate-63.version>3.10.3</hypersistence-utils-hibernate-63.version>
-        <hibernate-envers.version>7.1.2.Final</hibernate-envers.version>
     </properties>
+
 
     <dependencies>
         <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
+            <groupId>ru.ryatronth.service.desk</groupId>
+            <artifactId>branch-module</artifactId>
+            <version>${revision}</version>
         </dependency>
 
         <dependency>
-            <groupId>io.hypersistence</groupId>
-            <artifactId>hypersistence-utils-hibernate-63</artifactId>
-            <version>${hypersistence-utils-hibernate-63.version}</version>
+            <groupId>ru.ryatronth.service.desk</groupId>
+            <artifactId>persona-module</artifactId>
+            <version>${revision}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-envers</artifactId>
-            <version>${hibernate-envers.version}</version>
+            <groupId>ru.ryatronth.service.desk</groupId>
+            <artifactId>ticket-module</artifactId>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>false</executable>
+                    <mainClass>ru.ryatronth.service.desk.service.address.TicketApplication</mainClass>
+                    <layout>JAR</layout>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -86,9 +82,6 @@
                             <version>${lombok-mapstruct-binding.version}</version>
                         </path>
                     </annotationProcessorPaths>
-                    <compilerArgs>
-                        <arg>-parameters</arg>
-                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="008-create-user" author="roman.novikov">
+        <createTable tableName="user">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="email" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="first_name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="patronymic" type="TEXT"/>
+
+            <column name="city" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="address" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="workplace" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="branch_id" type="UUID"/>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

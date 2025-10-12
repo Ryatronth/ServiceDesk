@@ -1,0 +1,56 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="001-create-branch" author="roman.novikov">
+        <createTable tableName="branch">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="parent_id" type="UUID"/>
+
+            <column name="type_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="address" type="TEXT"/>
+
+            <column name="contact_info" type="TEXT"/>
+
+            <column name="manager_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated_at" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="branch"
+                baseColumnNames="parent_id"
+                referencedTableName="branch"
+                referencedColumnNames="id"
+                constraintName="fk_branch_parent"
+                onDelete="RESTRICT"/>
+
+        <addForeignKeyConstraint
+                baseTableName="branch"
+                baseColumnNames="type_id"
+                constraintName="fk_branch_type"
+                referencedTableName="branch_type"
+                referencedColumnNames="id"
+                onDelete="RESTRICT"/>
+
+    </changeSet>
+</databaseChangeLog>

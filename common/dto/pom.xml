@@ -12,7 +12,7 @@
     <artifactId>dto</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>address-dto</module>
+        <module>ticket-dto</module>
         <module>notification-dto</module>
     </modules>
 

@@ -1,0 +1,72 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="004-create-ticket" author="roman.novikov">
+        <createTable tableName="ticket">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="ticket_number" type="TEXT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="category_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="custom_priority" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="deadline" type="TIMESTAMPTZ"/>
+
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="title" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="problem" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_by" type="UUID"/>
+
+            <column name="solved_by" type="UUID"/>
+
+            <column name="assigned_to" type="UUID"/>
+
+            <column name="spent_time_in_minutes" type="INT" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="spent_money" type="NUMERIC(19,2)" defaultValueNumeric="0.00">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated_at" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="ticket"
+                                 baseColumnNames="category_id"
+                                 referencedTableName="ticket_category"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_ticket_category"
+                                 onDelete="RESTRICT"/>
+
+        <addNotNullConstraint tableName="ticket"
+                              columnName="id"
+                              columnDataType="UUID"/>
+    </changeSet>
+</databaseChangeLog>

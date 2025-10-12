@@ -1,0 +1,43 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="006-create-ticket-document" author="roman.novikov">
+        <createTable tableName="ticket_document">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="ticket_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="file_name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="content_type" type="TEXT"/>
+
+            <column name="file_size" type="BIGINT"/>
+
+            <column name="storage_path" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_by" type="UUID"/>
+
+            <column name="created_at" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="ticket_document"
+                                 baseColumnNames="ticket_id"
+                                 referencedTableName="ticket"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_document_ticket"
+                                 onDelete="CASCADE"/>
+
+    </changeSet>
+</databaseChangeLog>

@@ -3,18 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>ru.ryatronth.service.desk</groupId>
-        <artifactId>pom</artifactId>
+        <artifactId>module</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>service</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>ticket-service</module>
-    </modules>
+    <artifactId>ticket-module</artifactId>
 
     <properties>
         <maven.compiler.source>24</maven.compiler.source>
@@ -24,13 +19,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <groupId>ru.ryatronth.service.desk</groupId>
+            <artifactId>ticket-data</artifactId>
+            <version>${revision}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
+            <groupId>ru.ryatronth.service.desk</groupId>
+            <artifactId>ticket-dto</artifactId>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 
