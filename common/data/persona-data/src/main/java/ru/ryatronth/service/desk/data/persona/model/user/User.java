@@ -49,4 +49,7 @@ public class User {
     @Column(name = "branch_id")
     private UUID branchId;
 
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled;
+
 }

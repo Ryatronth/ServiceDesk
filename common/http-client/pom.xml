@@ -12,6 +12,10 @@
     <artifactId>http-client</artifactId>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>keycloak-client</module>
+    </modules>
+
     <properties>
         <maven.compiler.source>24</maven.compiler.source>
         <maven.compiler.target>24</maven.compiler.target>

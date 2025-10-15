@@ -26,13 +26,19 @@
 
         <dependency>
             <groupId>ru.ryatronth.service.desk</groupId>
-            <artifactId>branch-module</artifactId>
+            <artifactId>security-module</artifactId>
             <version>${revision}</version>
         </dependency>
 
         <dependency>
             <groupId>ru.ryatronth.service.desk</groupId>
             <artifactId>persona-module</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.ryatronth.service.desk</groupId>
+            <artifactId>branch-module</artifactId>
             <version>${revision}</version>
         </dependency>
 
@@ -50,7 +56,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <executable>false</executable>
-                    <mainClass>ru.ryatronth.service.desk.service.address.TicketApplication</mainClass>
+                    <mainClass>ru.ryatronth.service.desk.service.TicketApplication</mainClass>
                     <layout>JAR</layout>
                 </configuration>
                 <executions>

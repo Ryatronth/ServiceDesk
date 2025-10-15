@@ -26,6 +26,7 @@
 
         <hypersistence-utils-hibernate-63.version>3.10.3</hypersistence-utils-hibernate-63.version>
         <hibernate-envers.version>7.1.2.Final</hibernate-envers.version>
+        <hibernate-jpamodelgen.version>6.6.0.Final</hibernate-jpamodelgen.version>
     </properties>
 
     <dependencies>
@@ -61,6 +62,13 @@
             <artifactId>hibernate-envers</artifactId>
             <version>${hibernate-envers.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>${hibernate-jpamodelgen.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -84,6 +92,11 @@
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok-mapstruct-binding</artifactId>
                             <version>${lombok-mapstruct-binding.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.hibernate.orm</groupId>
+                            <artifactId>hibernate-jpamodelgen</artifactId>
+                            <version>${hibernate-jpamodelgen.version}</version>
                         </path>
                     </annotationProcessorPaths>
                     <compilerArgs>

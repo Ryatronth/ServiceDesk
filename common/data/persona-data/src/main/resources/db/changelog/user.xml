@@ -37,6 +37,8 @@
             </column>
 
             <column name="branch_id" type="UUID"/>
+
+            <column name="enabled" type="BOOL" defaultValue="false"/>
         </createTable>
 
     </changeSet>

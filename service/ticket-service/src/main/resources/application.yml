@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/service_desk
-    username: tgbot
-    password: tgbot
+    url: ${DB_URL:jdbc:postgresql://localhost:5432}/${DB_DATABASE:service_desk}
+    username: ${DB_USERNAME:tgbot}
+    password: ${DB_PASSWORD:tgbot}
     driver-class-name: org.postgresql.Driver
 
   jpa:

@@ -14,6 +14,8 @@
     <modules>
         <module>ticket-dto</module>
         <module>notification-dto</module>
+        <module>persona-dto</module>
+        <module>keycloak-dto</module>
     </modules>
 
     <properties>
