@@ -4,6 +4,8 @@ spring:
     username: ${DB_USERNAME:tgbot}
     password: ${DB_PASSWORD:tgbot}
     driver-class-name: org.postgresql.Driver
+  profiles:
+    include: security
 
   jpa:
     hibernate:

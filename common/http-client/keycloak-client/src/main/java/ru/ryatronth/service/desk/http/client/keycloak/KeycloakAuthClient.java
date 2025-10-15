@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "keycloakAuthClient", url = "${http-clients.keycloak.host}", configuration = {BaseKeycloakClientConfig.class})
+@FeignClient(name = "keycloakAuthClient", url = "${http-client.keycloak.host}", configuration = {BaseKeycloakClientConfig.class})
 public interface KeycloakAuthClient {
 
     /**

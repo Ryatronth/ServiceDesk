@@ -27,7 +27,7 @@ public class KeycloakUserService {
         if (users.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(users.getFirst());
+        return Optional.of(users.get(0));
     }
 
     public Optional<List<KeycloakGroupRepresentation>> getUserGroups(String userId) {

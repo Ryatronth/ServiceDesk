@@ -32,6 +32,12 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>ru.ryatronth.service.desk</groupId>
+            <artifactId>property-util</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 
 </project>

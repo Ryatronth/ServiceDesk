@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "keycloakClient", url = "${http-clients.keycloak.host}", configuration = {BaseKeycloakClientConfig.class, SecuredKeycloakClientConfig.class})
+@FeignClient(name = "keycloakClient", url = "${http-client.keycloak.host}", configuration = {BaseKeycloakClientConfig.class, SecuredKeycloakClientConfig.class})
 public interface KeycloakClient {
 
     /**

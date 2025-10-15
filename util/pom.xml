@@ -12,6 +12,10 @@
     <artifactId>util</artifactId>
     <packaging>pom</packaging>
 
+    <modules>
+        <module>property-util</module>
+    </modules>
+
     <properties>
         <maven.compiler.source>24</maven.compiler.source>
         <maven.compiler.target>24</maven.compiler.target>
