@@ -1,13 +1,13 @@
-package ru.ryatronth.service.desk.module.security;
+package ru.ryatronth.service.desk.module.security.config;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import ru.ryatronth.service.desk.module.security.service.CustomOidcUserService;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,13 +23,26 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, OidcClientInitiatedLogoutSuccessHandler logoutSuccessHandler) throws Exception {
-        http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
-            .oauth2Login(Customizer.withDefaults()).logout(
-                logout -> logout.logoutSuccessHandler(logoutSuccessHandler)
-                    .deleteCookies("JSESSIONID"));
+    public SecurityFilterChain securityFilterChain(
+        HttpSecurity http,
+        OidcClientInitiatedLogoutSuccessHandler logoutSuccessHandler,
+        CustomOidcUserService customOidcUserService) throws Exception {
+
+        http
+            .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
+            .oauth2Login(oauth2 -> oauth2
+                .userInfoEndpoint(userInfo -> userInfo
+                    .oidcUserService(customOidcUserService) // <-- подставляем наш сервис
+                )
+            )
+            .logout(logout -> logout
+                .logoutSuccessHandler(logoutSuccessHandler)
+                .deleteCookies("JSESSIONID")
+            );
+
         return http.build();
     }
+
 
     @Bean
     public OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler(
@@ -57,7 +70,8 @@ public class SecurityConfig {
                         }
                     }
                 }
-            } return mapped;
+            }
+            return mapped;
         };
     }
 

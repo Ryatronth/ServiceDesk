@@ -23,9 +23,9 @@ public class UserSpecificationBuilder {
         return this;
     }
 
-    public UserSpecificationBuilder city(String city) {
-        if (city != null && !city.isBlank()) {
-            spec = spec.and(likeIgnoreCase(User_.city, city));
+    public UserSpecificationBuilder address(String address) {
+        if (address != null && !address.isBlank()) {
+            spec = spec.and(likeIgnoreCase(User_.address, address));
         }
         return this;
     }

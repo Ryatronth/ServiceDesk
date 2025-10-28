@@ -1,4 +1,4 @@
-package ru.ryatronth.service.desk.module.security;
+package ru.ryatronth.service.desk.module.security.service;
 
 import java.util.List;
 import java.util.Optional;

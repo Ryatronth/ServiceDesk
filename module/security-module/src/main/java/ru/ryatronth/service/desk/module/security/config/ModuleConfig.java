@@ -1,4 +1,4 @@
-package ru.ryatronth.service.desk.module.security;
+package ru.ryatronth.service.desk.module.security.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

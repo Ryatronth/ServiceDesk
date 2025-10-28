@@ -10,7 +10,8 @@ spring:
               - openid
               - profile
               - email
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+              - service-desk-scope
+            redirect-uri: ${APPLICATION_HOST}:${APPLICATION_PORT}/login/oauth2/code/keycloak
         provider:
           keycloak:
-            issuer-uri: ${KEYCLOAK_HOST}/realms/${KEYCLOAK_REALM}
+            issuer-uri: ${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM:ServiceDesk}
