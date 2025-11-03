@@ -9,12 +9,14 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>security-module</artifactId>
+    <artifactId>file-module</artifactId>
 
     <properties>
         <maven.compiler.source>24</maven.compiler.source>
         <maven.compiler.target>24</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <s3.version>2.37.3</s3.version>
     </properties>
 
     <dependencies>
@@ -29,20 +31,10 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>ru.ryatronth.service.desk</groupId>
-            <artifactId>keycloak-client</artifactId>
-            <version>${revision}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>ru.ryatronth.service.desk</groupId>
-            <artifactId>persona-data</artifactId>
-            <version>${revision}</version>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+            <version>${s3.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -52,8 +44,15 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+            <groupId>ru.ryatronth.service.desk</groupId>
+            <artifactId>file-data</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.ryatronth.service.desk</groupId>
+            <artifactId>file-dto</artifactId>
+            <version>${revision}</version>
         </dependency>
     </dependencies>
 

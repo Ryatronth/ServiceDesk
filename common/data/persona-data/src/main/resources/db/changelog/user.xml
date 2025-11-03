@@ -24,10 +24,6 @@
 
             <column name="patronymic" type="TEXT"/>
 
-            <column name="city" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-
             <column name="address" type="TEXT">
                 <constraints nullable="false"/>
             </column>

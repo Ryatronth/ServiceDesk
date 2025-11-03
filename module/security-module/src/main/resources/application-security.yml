@@ -1,17 +1,6 @@
 spring:
   security:
     oauth2:
-      client:
-        registration:
-          keycloak:
-            client-id: ${KEYCLOAK_CLIENT_ID}
-            client-secret: ${KEYCLOAK_CLIENT_SECRET}
-            scope:
-              - openid
-              - profile
-              - email
-              - service-desk-scope
-            redirect-uri: ${APPLICATION_HOST}:${APPLICATION_PORT}/login/oauth2/code/keycloak
-        provider:
-          keycloak:
-            issuer-uri: ${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM:ServiceDesk}
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/realms/${KEYCLOAK_REALM:ServiceDesk}

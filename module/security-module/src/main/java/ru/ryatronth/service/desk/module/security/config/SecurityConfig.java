@@ -1,77 +1,46 @@
 package ru.ryatronth.service.desk.module.security.config;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import ru.ryatronth.service.desk.module.security.service.CustomOidcUserService;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
-import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(
-        HttpSecurity http,
-        OidcClientInitiatedLogoutSuccessHandler logoutSuccessHandler,
-        CustomOidcUserService customOidcUserService) throws Exception {
-
-        http
-            .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
-            .oauth2Login(oauth2 -> oauth2
-                .userInfoEndpoint(userInfo -> userInfo
-                    .oidcUserService(customOidcUserService) // <-- подставляем наш сервис
-                )
-            )
-            .logout(logout -> logout
-                .logoutSuccessHandler(logoutSuccessHandler)
-                .deleteCookies("JSESSIONID")
-            );
-
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(auth -> auth.requestMatchers("/public/**").permitAll().anyRequest().authenticated())
+            .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
         return http.build();
     }
 
+    private Converter<Jwt, AbstractAuthenticationToken> jwtAuthenticationConverter() {
+        return jwt -> {
+            Collection<GrantedAuthority> authorities = new ArrayList<>();
 
-    @Bean
-    public OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler(
-        ClientRegistrationRepository clientRegistrationRepository) {
-        OidcClientInitiatedLogoutSuccessHandler handler =
-            new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
-        handler.setPostLogoutRedirectUri("{baseUrl}/");
-        return handler;
-    }
-
-    @Bean
-    public GrantedAuthoritiesMapper userAuthoritiesMapper() {
-        return (authorities) -> {
-            Set<GrantedAuthority> mapped = new HashSet<>();
-            for (GrantedAuthority authority : authorities) {
-                if (authority instanceof OidcUserAuthority oidc) {
-                    Map<String, Object> claims = oidc.getIdToken().getClaims();
-                    Object realmAccess = claims.get("realm_access");
-                    if (realmAccess instanceof Map<?, ?> map) {
-                        Object roles = map.get("roles");
-                        if (roles instanceof Collection<?> col) {
-                            for (Object r : col) {
-                                mapped.add(new SimpleGrantedAuthority("ROLE_" + r));
-                            }
-                        }
-                    }
+            Map<String, Object> realmAccess = jwt.getClaim("realm_access");
+            if (realmAccess != null && realmAccess.get("roles") instanceof Collection<?> roles) {
+                for (Object role : roles) {
+                    authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
                 }
             }
-            return mapped;
+
+            return new JwtAuthenticationToken(jwt, authorities, jwt.getClaimAsString("preferred_username"));
         };
     }
 

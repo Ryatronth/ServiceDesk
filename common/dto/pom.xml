@@ -16,12 +16,15 @@
         <module>notification-dto</module>
         <module>persona-dto</module>
         <module>keycloak-dto</module>
+        <module>file-dto</module>
     </modules>
 
     <properties>
         <maven.compiler.source>24</maven.compiler.source>
         <maven.compiler.target>24</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <swagger.version>2.2.36</swagger.version>
     </properties>
 
     <dependencies>
@@ -33,6 +36,13 @@
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations-jakarta</artifactId>
+            <version>${swagger.version}</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

@@ -17,6 +17,7 @@
         <module>persona-data</module>
         <module>branch-data</module>
         <module>statistic-data</module>
+        <module>file-data</module>
     </modules>
 
     <properties>

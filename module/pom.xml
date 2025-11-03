@@ -18,6 +18,7 @@
         <module>branch-module</module>
         <module>ticket-module</module>
         <module>statistic-module</module>
+        <module>file-module</module>
     </modules>
 
     <properties>
