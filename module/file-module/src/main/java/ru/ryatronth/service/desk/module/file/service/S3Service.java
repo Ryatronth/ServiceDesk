@@ -42,7 +42,7 @@ public class S3Service {
     @Transactional
     public FileDto initUpload(String originalName, String contentType, Long sizeBytes) {
         UUID id = UUID.randomUUID();
-        String key = s3Properties.keyPrefix() + id + "/" + originalName;
+        String key = s3Properties.keyPrefix() + "/" + id + "/" + originalName;
 
         String presignedPutUrl = generatePresignedPutUrl(key, contentType);
 
@@ -58,7 +58,7 @@ public class S3Service {
                                       .status(FileStatus.PENDING_UPLOAD)
                                       .build();
 
-        fileRepository.save(entity);
+        entity = fileRepository.save(entity);
         return fileMapper.toDto(entity);
     }
 
@@ -79,7 +79,7 @@ public class S3Service {
         String presignedGetUrl = generatePresignedGetUrl(entity.getKey());
         entity.setUrl(presignedGetUrl);
 
-        fileRepository.save(entity);
+        entity = fileRepository.save(entity);
         return fileMapper.toDto(entity);
     }
 
@@ -94,7 +94,7 @@ public class S3Service {
         if (isUrlExpired(entity)) {
             log.debug("URL устарел — создаём новый для файла {}", id);
             entity.setUrl(generatePresignedGetUrl(entity.getKey()));
-            fileRepository.save(entity);
+            entity = fileRepository.save(entity);
         }
 
         return fileMapper.toDto(entity);

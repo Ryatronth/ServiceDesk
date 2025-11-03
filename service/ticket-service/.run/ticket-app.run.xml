@@ -15,7 +15,7 @@
       <env name="KEYCLOAK_CLIENT_SECRET" value="0EPjL3isbM7oq59MPIeOwC9FltZDniDw" />
       <env name="S3_ACCESS_KEY" value="minioadmin"/>
       <env name="S3_SECRET_KEY" value="minioadmin"/>
-      <env name="S3_ENDPOINT" value="http://localhost:8090"/>
+      <env name="S3_ENDPOINT" value="http://localhost:9000"/>
       <env name="S3_BUCKET" value="files"/>
       <env name="S3_KEY_PREFIX" value="uploads"/>
       <env name="S3_URL_EXPIRATION_MINUTES" value="60"/>

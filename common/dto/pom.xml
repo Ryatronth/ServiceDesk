@@ -17,6 +17,7 @@
         <module>persona-dto</module>
         <module>keycloak-dto</module>
         <module>file-dto</module>
+        <module>branch-dto</module>
     </modules>
 
     <properties>

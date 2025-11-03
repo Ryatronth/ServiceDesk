@@ -1,5 +1,7 @@
 package ru.ryatronth.service.desk.module.ticket.api.v1;
 
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,25 +12,24 @@ import ru.ryatronth.service.desk.dto.ticket.TicketCreateDto;
 import ru.ryatronth.service.desk.dto.ticket.TicketDto;
 import ru.ryatronth.service.desk.dto.ticket.TicketUpdateDto;
 
-import java.util.Collection;
 import java.util.UUID;
 
 @RequestMapping("/api/v1/tickets")
 public interface TicketApiV1 {
 
     @PostMapping
-    TicketDto create(TicketCreateDto dto);
+    ResponseEntity<TicketDto> create(TicketCreateDto dto);
 
     @PutMapping("/{ticketId}")
-    TicketDto update(@PathVariable UUID ticketId, TicketUpdateDto dto);
+    ResponseEntity<TicketDto> update(@PathVariable UUID ticketId, TicketUpdateDto dto);
 
     @GetMapping("/{ticketId}")
-    TicketDto getById(@PathVariable UUID ticketId);
+    ResponseEntity<TicketDto> getById(@PathVariable UUID ticketId);
 
     @GetMapping
-    Collection<TicketDto> getByFilters();
+    ResponseEntity<Page<TicketDto>> getByFilters();
 
     @PatchMapping("/{ticketId}/close")
-    TicketDto close(@PathVariable UUID ticketId);
+    ResponseEntity<TicketDto> close(@PathVariable UUID ticketId);
 
 }

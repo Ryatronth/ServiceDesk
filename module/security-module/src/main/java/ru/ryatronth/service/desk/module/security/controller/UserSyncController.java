@@ -1,9 +1,11 @@
 package ru.ryatronth.service.desk.module.security.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.RestController;
+import ru.ryatronth.service.desk.dto.persona.UserDto;
 import ru.ryatronth.service.desk.module.security.service.UserSyncService;
 
 @RestController
@@ -13,8 +15,8 @@ public class UserSyncController implements UserSyncApi{
     private final UserSyncService userSyncService;
 
     @Override
-    public void syncUser(@AuthenticationPrincipal Jwt jwt) {
-        userSyncService.syncUserFromJwt(jwt);
+    public ResponseEntity<UserDto> syncUser(@AuthenticationPrincipal Jwt jwt) {
+        return ResponseEntity.ok(userSyncService.syncUserFromJwt(jwt));
     }
 
 }
