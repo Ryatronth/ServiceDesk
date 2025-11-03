@@ -17,4 +17,5 @@ public record FileDto(@Schema(description = "Идентификатор файл
                       @Schema(description = "Ключ (путь в S3)") String key,
                       @Schema(description = "Presigned URL для скачивания") String url,
                       @Schema(description = "Статус файла") FileClientStatus status,
-                      @Schema(description = "Временная метка создания") Instant createdAt) {}
+                      @Schema(description = "Временная метка создания") Instant createdAt,
+                      @Schema(description = "Временная метка обновления") Instant updatedAt) {}

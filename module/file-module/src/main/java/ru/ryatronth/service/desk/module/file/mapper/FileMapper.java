@@ -20,6 +20,7 @@ public interface FileMapper {
     @Mapping(target = "url", source = "url")
     @Mapping(target = "status", source = "status", qualifiedByName = "mapStatus")
     @Mapping(target = "createdAt", source = "createdAt")
+    @Mapping(target = "updatedAt", source = "updatedAt")
     FileDto toDto(FileEntity entity);
 
     @Named("mapStatus")

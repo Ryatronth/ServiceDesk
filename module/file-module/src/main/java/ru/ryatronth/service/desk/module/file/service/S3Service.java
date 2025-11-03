@@ -39,7 +39,6 @@ public class S3Service {
 
     private final S3Presigner s3Presigner;
 
-    @Transactional
     public FileDto initUpload(String originalName, String contentType, Long sizeBytes) {
         UUID id = UUID.randomUUID();
         String key = s3Properties.keyPrefix() + "/" + id + "/" + originalName;
@@ -58,8 +57,7 @@ public class S3Service {
                                       .status(FileStatus.PENDING_UPLOAD)
                                       .build();
 
-        entity = fileRepository.save(entity);
-        return fileMapper.toDto(entity);
+        return fileMapper.toDto(fileRepository.save(entity));
     }
 
     @Transactional
