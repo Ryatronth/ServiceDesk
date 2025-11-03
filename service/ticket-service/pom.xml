@@ -47,6 +47,12 @@
             <artifactId>ticket-module</artifactId>
             <version>${revision}</version>
         </dependency>
+
+        <dependency>
+            <groupId>ru.ryatronth.service.desk</groupId>
+            <artifactId>file-module</artifactId>
+            <version>${revision}</version>
+        </dependency>
     </dependencies>
 
     <build>

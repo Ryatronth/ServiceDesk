@@ -42,7 +42,7 @@ public class S3Service {
     @Transactional
     public FileDto initUpload(String originalName, String contentType, Long sizeBytes) {
         UUID id = UUID.randomUUID();
-        String key = "uploads/" + id + "/" + originalName;
+        String key = s3Properties.keyPrefix() + id + "/" + originalName;
 
         String presignedPutUrl = generatePresignedPutUrl(key, contentType);
 
