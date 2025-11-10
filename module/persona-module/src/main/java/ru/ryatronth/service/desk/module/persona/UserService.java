@@ -1,7 +1,11 @@
 package ru.ryatronth.service.desk.module.persona;
 
 import jakarta.persistence.EntityNotFoundException;
+
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ru.ryatronth.service.desk.data.persona.model.user.User;
@@ -33,15 +37,18 @@ public class UserService {
     }
 
     public UserDto getById(UUID id) {
-        User user = userRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
+        User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
         return userMapper.toDto(user);
+    }
+
+    public List<UserDto> getBIds(List<UUID> ids) {
+        List<User> users = userRepository.findAllById(ids);
+        return users.stream().map(userMapper::toDto).collect(Collectors.toList());
     }
 
     @Transactional
     public UserDto update(UUID id, UserDto dto) {
-        User user = userRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
+        User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
 
         userMapper.updateMutable(dto, user);
         user = userRepository.save(user);
@@ -58,10 +65,7 @@ public class UserService {
         return userRepository.findAll(pageable).map(userMapper::toDto);
     }
 
-    public Page<UserDto> search(
-        Specification<User> specification,
-        Pageable pageable
-    ) {
+    public Page<UserDto> search(Specification<User> specification, Pageable pageable) {
         return userRepository.findAll(specification, pageable).map(userMapper::toDto);
     }
 

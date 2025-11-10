@@ -21,8 +21,6 @@
 
             <column name="address" type="TEXT"/>
 
-            <column name="contact_info" type="TEXT"/>
-
             <column name="manager_id" type="UUID">
                 <constraints nullable="false"/>
             </column>

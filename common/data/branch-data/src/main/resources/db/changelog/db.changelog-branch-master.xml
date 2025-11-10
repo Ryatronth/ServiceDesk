@@ -6,6 +6,7 @@
 
     <include file="db/changelog/branch-type.xml"/>
     <include file="db/changelog/branch.xml"/>
-    <include file="db/changelog/branch-executor.xml"/>
+    <include file="/db/changelog/branch-employee.xml"/>
+    <include file="db/changelog/branch-employee-category.xml"/>
 
 </databaseChangeLog>

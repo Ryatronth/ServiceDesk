@@ -15,6 +15,7 @@
         <module>data</module>
         <module>dto</module>
         <module>http-client</module>
+        <module>adapter</module>
     </modules>
 
     <properties>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="014-create-branch-employee-category" author="roman.novikov">
+
+        <createTable tableName="branch_employee_category">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="employee_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="category_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="branch_employee_category"
+                                 baseColumnNames="employee_id"
+                                 referencedTableName="branch_employee"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_employee_category_employee"
+                                 onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint baseTableName="branch_employee_category"
+                                 baseColumnNames="category_id"
+                                 referencedTableName="ticket_category"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_employee_category_category"
+                                 onDelete="CASCADE"/>
+
+        <createIndex indexName="idx_branch_employee_category_employee_id"
+                     tableName="branch_employee_category">
+            <column name="employee_id"/>
+        </createIndex>
+
+        <createIndex indexName="idx_branch_employee_category_category_id"
+                     tableName="branch_employee_category">
+            <column name="category_id"/>
+        </createIndex>
+
+    </changeSet>
+
+</databaseChangeLog>

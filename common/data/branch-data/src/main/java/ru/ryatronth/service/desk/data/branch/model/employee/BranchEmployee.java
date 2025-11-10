@@ -1,10 +1,13 @@
-package ru.ryatronth.service.desk.data.branch.model.branch;
+package ru.ryatronth.service.desk.data.branch.model.employee;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
 import java.time.Instant;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -12,40 +15,34 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "branch")
+@Table(name = "branch_employee")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Branch {
+public class BranchEmployee {
 
     @Id
     @GeneratedValue
     private UUID id;
 
-    @Column(name = "parent_id")
-    private UUID parentId;
+    @Column(name = "branch_id", nullable = false)
+    private UUID branchId;
 
-    @Column(name = "type_id", nullable = false)
-    private UUID typeId;
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
 
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @Column(name = "address")
-    private String address;
-
-    @Column(name = "manager_id", nullable = false)
-    private UUID managerId;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", columnDefinition = "TEXT", nullable = false)
+    private EmployeeRole role;
 
     @CreationTimestamp
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
     @UpdateTimestamp

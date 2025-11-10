@@ -5,30 +5,22 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>ru.ryatronth.service.desk</groupId>
-        <artifactId>dto</artifactId>
+        <artifactId>common</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>branch-dto</artifactId>
+    <artifactId>adapter</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>persona-adapter</module>
+        <module>ticket-adapter</module>
+        <module>notification-adapter</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>24</maven.compiler.source>
         <maven.compiler.target>24</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>ru.ryatronth.service.desk</groupId>
-            <artifactId>persona-dto</artifactId>
-            <version>${revision}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>ru.ryatronth.service.desk</groupId>
-            <artifactId>ticket-dto</artifactId>
-            <version>${revision}</version>
-        </dependency>
-    </dependencies>
 
 </project>

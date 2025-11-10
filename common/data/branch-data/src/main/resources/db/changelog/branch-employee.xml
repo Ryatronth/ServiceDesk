@@ -1,10 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="002-create-branch-executor" author="roman.novikov">
-        <createTable tableName="branch_executor">
+    <changeSet id="013-create-branch-employee" author="roman.novikov">
+
+        <createTable tableName="branch_employee">
             <column name="id" type="UUID">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -17,25 +19,36 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="category_id" type="UUID">
+            <column name="role" type="TEXT">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="created_at" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP">
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="updated_at" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP">
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="branch_executor"
+        <addForeignKeyConstraint baseTableName="branch_employee"
                                  baseColumnNames="branch_id"
                                  referencedTableName="branch"
                                  referencedColumnNames="id"
-                                 constraintName="fk_branch_executor_branch"
+                                 constraintName="fk_branch_employee_branch"
                                  onDelete="CASCADE"/>
 
+        <createIndex indexName="idx_branch_employee_user_id"
+                     tableName="branch_employee">
+            <column name="user_id"/>
+        </createIndex>
+
+        <createIndex indexName="idx_branch_employee_branch_id"
+                     tableName="branch_employee">
+            <column name="branch_id"/>
+        </createIndex>
+
     </changeSet>
+
 </databaseChangeLog>

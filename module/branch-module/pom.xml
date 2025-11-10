@@ -24,8 +24,25 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>ru.ryatronth.service.desk</groupId>
             <artifactId>branch-data</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.ryatronth.service.desk</groupId>
+            <artifactId>branch-dto</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>

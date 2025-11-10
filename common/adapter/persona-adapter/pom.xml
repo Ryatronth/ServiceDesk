@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>ru.ryatronth.service.desk</groupId>
-        <artifactId>dto</artifactId>
+        <artifactId>adapter</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>branch-dto</artifactId>
+    <artifactId>persona-adapter</artifactId>
 
     <properties>
         <maven.compiler.source>24</maven.compiler.source>
@@ -20,13 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>ru.ryatronth.service.desk</groupId>
-            <artifactId>persona-dto</artifactId>
-            <version>${revision}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>ru.ryatronth.service.desk</groupId>
-            <artifactId>ticket-dto</artifactId>
+            <artifactId>persona-module</artifactId>
             <version>${revision}</version>
         </dependency>
     </dependencies>

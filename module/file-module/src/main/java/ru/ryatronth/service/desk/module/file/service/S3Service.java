@@ -46,16 +46,16 @@ public class S3Service {
         String presignedPutUrl = generatePresignedPutUrl(key, contentType);
 
         FileEntity entity = FileEntity.builder()
-                                      .id(id)
-                                      .originalName(originalName)
-                                      .contentType(contentType)
-                                      .sizeBytes(sizeBytes)
-                                      .bucket(s3Properties.bucket())
-                                      .key(key)
-                                      .url(presignedPutUrl)
-                                      .temporary(true)
-                                      .status(FileStatus.PENDING_UPLOAD)
-                                      .build();
+                .id(id)
+                .originalName(originalName)
+                .contentType(contentType)
+                .sizeBytes(sizeBytes)
+                .bucket(s3Properties.bucket())
+                .key(key)
+                .url(presignedPutUrl)
+                .temporary(true)
+                .status(FileStatus.PENDING_UPLOAD)
+                .build();
 
         return fileMapper.toDto(fileRepository.save(entity));
     }
@@ -118,20 +118,20 @@ public class S3Service {
 
     private String generatePresignedPutUrl(String key, String contentType) {
         PutObjectPresignRequest request = PutObjectPresignRequest.builder()
-                                                                 .signatureDuration(Duration.ofMinutes(s3Properties.urlExpirationMinutes()))
-                                                                 .putObjectRequest(p -> p.bucket(s3Properties.bucket())
-                                                                                         .key(key)
-                                                                                         .contentType(contentType))
-                                                                 .build();
+                .signatureDuration(Duration.ofMinutes(s3Properties.urlExpirationMinutes()))
+                .putObjectRequest(p -> p.bucket(s3Properties.bucket())
+                        .key(key)
+                        .contentType(contentType))
+                .build();
         URL url = s3Presigner.presignPutObject(request).url();
         return url.toString();
     }
 
     private String generatePresignedGetUrl(String key) {
         GetObjectPresignRequest request = GetObjectPresignRequest.builder()
-                                                                 .signatureDuration(Duration.ofMinutes(s3Properties.urlExpirationMinutes()))
-                                                                 .getObjectRequest(p -> p.bucket(s3Properties.bucket()).key(key))
-                                                                 .build();
+                .signatureDuration(Duration.ofMinutes(s3Properties.urlExpirationMinutes()))
+                .getObjectRequest(p -> p.bucket(s3Properties.bucket()).key(key))
+                .build();
         URL url = s3Presigner.presignGetObject(request).url();
         return url.toString();
     }
@@ -147,8 +147,8 @@ public class S3Service {
 
     private boolean isUrlExpired(FileEntity entity) {
         return entity.getUpdatedAt() == null || entity.getUpdatedAt()
-                                                      .isBefore(Instant.now()
-                                                                       .minus(Duration.ofMinutes(s3Properties.urlExpirationMinutes())));
+                .isBefore(Instant.now()
+                        .minus(Duration.ofMinutes(s3Properties.urlExpirationMinutes())));
     }
 
 }
