@@ -15,8 +15,7 @@ public record UserDto(
     @Schema(description = "Имя пользователя", example = "Иван") String firstName,
     @Schema(description = "Фамилия пользователя", example = "Петров") String lastName,
     @Schema(description = "Отчество пользователя", example = "Игоревич") String patronymic,
-    @Schema(description = "Адрес филиала, к которому привязан пользователь", example = "г. Москва, ул. Ленина, д. 10") String address,
     @Schema(description = "Рабочее место") String workplace,
-    @Schema(description = "ID филиала, к которому относится пользователь", example = "c74b9273-f8d9-4c1f-91c2-4fdd59e1cc0a") UUID branchId,
+    @Schema(description = "Код филиала, к которому относится пользователь", example = "c74b9273-f8d9-4c1f-91c2-4fdd59e1cc0a") String branch,
     @Schema(description = "Признак активности пользователя", example = "true") boolean enabled,
     @Schema(description = "Список ролей пользователя", example = "[\"ROLE_ADMIN\", \"ROLE_USER\"]") List<String> roles) {}

@@ -23,13 +23,6 @@ public class UserSpecificationBuilder {
         return this;
     }
 
-    public UserSpecificationBuilder address(String address) {
-        if (address != null && !address.isBlank()) {
-            spec = spec.and(likeIgnoreCase(User_.address, address));
-        }
-        return this;
-    }
-
     public UserSpecificationBuilder workplace(String workplace) {
         if (workplace != null && !workplace.isBlank()) {
             spec = spec.and(likeIgnoreCase(User_.workplace, workplace));
@@ -37,9 +30,9 @@ public class UserSpecificationBuilder {
         return this;
     }
 
-    public UserSpecificationBuilder branchId(UUID branchId) {
-        if (branchId != null) {
-            spec = spec.and(equal(User_.branchId, branchId));
+    public UserSpecificationBuilder branch(String branch) {
+        if (branch != null) {
+            spec = spec.and(equal(User_.branch, branch));
         }
         return this;
     }

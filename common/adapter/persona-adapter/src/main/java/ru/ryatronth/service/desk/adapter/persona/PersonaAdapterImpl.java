@@ -1,6 +1,10 @@
 package ru.ryatronth.service.desk.adapter.persona;
 
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import ru.ryatronth.service.desk.dto.persona.UserDto;
 import ru.ryatronth.service.desk.module.persona.UserService;
@@ -20,8 +24,13 @@ public class PersonaAdapterImpl implements PersonaAdapter {
     }
 
     @Override
-    public List<UserDto> getByIds(List<UUID> ids) {
-        return userService.getBIds(ids);
+    public Map<UUID, UserDto> getByIds(List<UUID> ids) {
+        return userService.getByIds(ids);
+    }
+
+    @Override
+    public Page<UserDto> getByBranchCode(String branchCode, Pageable pageable) {
+        return userService.getByBranchCode(branchCode, pageable);
     }
 
 }

@@ -2,23 +2,23 @@
   <configuration default="false" name="ticket-app" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" value="local" />
     <envs>
-      <env name="DB_URL" value="jdbc:postgresql://localhost:5432" />
-      <env name="DB_DATABASE" value="service_desk" />
-      <env name="DB_USERNAME" value="postgres" />
-      <env name="DB_PASSWORD" value="postgres" />
       <env name="APPLICATION_HOST" value="http://localhost" />
       <env name="APPLICATION_PORT" value="8090" />
+      <env name="DB_DATABASE" value="service_desk" />
+      <env name="DB_PASSWORD" value="postgres" />
+      <env name="DB_URL" value="jdbc:postgresql://localhost:5432" />
+      <env name="DB_USERNAME" value="postgres" />
+      <env name="KEYCLOAK_CLIENT_ID" value="service_desk" />
+      <env name="KEYCLOAK_CLIENT_SECRET" value="o4NxrAMXTbwebDs5TmLl8Tuu5fAJDK51" />
       <env name="KEYCLOAK_HOST" value="http://localhost" />
       <env name="KEYCLOAK_PORT" value="8080" />
       <env name="KEYCLOAK_REALM" value="ServiceDesk" />
-      <env name="KEYCLOAK_CLIENT_ID" value="service_desk" />
-      <env name="KEYCLOAK_CLIENT_SECRET" value="0EPjL3isbM7oq59MPIeOwC9FltZDniDw" />
-      <env name="S3_ACCESS_KEY" value="minioadmin"/>
-      <env name="S3_SECRET_KEY" value="minioadmin"/>
-      <env name="S3_ENDPOINT" value="http://localhost:9000"/>
-      <env name="S3_BUCKET" value="files"/>
-      <env name="S3_KEY_PREFIX" value="uploads"/>
-      <env name="S3_URL_EXPIRATION_MINUTES" value="60"/>
+      <env name="S3_ACCESS_KEY" value="minioadmin" />
+      <env name="S3_BUCKET" value="files" />
+      <env name="S3_ENDPOINT" value="http://localhost:9000" />
+      <env name="S3_KEY_PREFIX" value="uploads" />
+      <env name="S3_SECRET_KEY" value="minioadmin" />
+      <env name="S3_URL_EXPIRATION_MINUTES" value="60" />
     </envs>
     <module name="ticket-service" />
     <option name="SHORTEN_COMMAND_LINE" value="MANIFEST" />

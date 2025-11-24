@@ -3,7 +3,9 @@ package ru.ryatronth.service.desk.module.persona;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,7 @@ import ru.ryatronth.service.desk.data.persona.model.user.User;
 import ru.ryatronth.service.desk.data.persona.model.user.UserRepository;
 import ru.ryatronth.service.desk.dto.persona.UserDto;
 
+import org.apache.commons.lang3.function.Functions;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -41,24 +44,16 @@ public class UserService {
         return userMapper.toDto(user);
     }
 
-    public List<UserDto> getBIds(List<UUID> ids) {
+    public Map<UUID, UserDto> getByIds(List<UUID> ids) {
         List<User> users = userRepository.findAllById(ids);
-        return users.stream().map(userMapper::toDto).collect(Collectors.toList());
+        return users.stream().map(userMapper::toDto).collect(Collectors.toMap(
+                UserDto::id,
+                Function.identity()
+        ));
     }
 
-    @Transactional
-    public UserDto update(UUID id, UserDto dto) {
-        User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
-
-        userMapper.updateMutable(dto, user);
-        user = userRepository.save(user);
-        log.info("Updated user {}", user.getId());
-        return userMapper.toDto(user);
-    }
-
-    public void delete(UUID id) {
-        userRepository.deleteById(id);
-        log.info("Deleted user {}", id);
+    public Page<UserDto> getByBranchCode(String branchCode, Pageable pageable) {
+        return userRepository.findByBranch(branchCode, pageable).map(userMapper::toDto);
     }
 
     public Page<UserDto> getPage(Pageable pageable) {

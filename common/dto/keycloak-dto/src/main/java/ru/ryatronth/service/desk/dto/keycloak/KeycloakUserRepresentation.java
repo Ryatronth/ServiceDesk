@@ -1,5 +1,7 @@
 package ru.ryatronth.service.desk.dto.keycloak;
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public record KeycloakUserRepresentation(
@@ -8,11 +10,8 @@ public record KeycloakUserRepresentation(
     String email,
     String firstName,
     String lastName,
-    String patronymic,
-    String city,
-    String address,
-    String workplace,
-    Boolean enabled
+    Boolean enabled,
+    Map<String, List<String>> attributes
 ) {
 
 }

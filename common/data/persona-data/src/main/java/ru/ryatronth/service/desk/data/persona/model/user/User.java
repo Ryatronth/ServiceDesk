@@ -5,7 +5,6 @@ import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -40,14 +39,11 @@ public class User {
     @Column(name = "patronymic")
     private String patronymic;
 
-    @Column(name = "address", nullable = false)
-    private String address;
-
     @Column(name = "workplace", nullable = false)
     private String workplace;
 
-    @Column(name = "branch_id")
-    private UUID branchId;
+    @Column(name = "branch")
+    private String branch;
 
     @Column(name = "enabled", nullable = false)
     private boolean enabled;

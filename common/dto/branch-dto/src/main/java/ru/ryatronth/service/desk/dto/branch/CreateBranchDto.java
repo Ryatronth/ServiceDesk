@@ -1,13 +1,28 @@
 package ru.ryatronth.service.desk.dto.branch;
 
-import java.util.List;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public record CreateBranchDto(
-    UUID parentId,
-    UUID typeId,
-    UUID managerId,
-    String name,
-    String address,
-    List<CreateBranchContactDto> contacts
-) {}
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class CreateBranchDto {
+
+    private UUID parentId;
+
+    private UUID typeId;
+
+    private UUID codeId;
+
+    private String name;
+
+    private String area;
+
+    private String address;
+}

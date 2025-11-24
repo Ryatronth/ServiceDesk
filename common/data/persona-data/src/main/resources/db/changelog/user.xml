@@ -24,17 +24,15 @@
 
             <column name="patronymic" type="TEXT"/>
 
-            <column name="address" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-
             <column name="workplace" type="TEXT">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="branch_id" type="UUID"/>
+            <column name="branch" type="text"/>
 
             <column name="enabled" type="BOOL" defaultValue="false"/>
+
+            <column name="roles" type="text"/>
         </createTable>
 
     </changeSet>

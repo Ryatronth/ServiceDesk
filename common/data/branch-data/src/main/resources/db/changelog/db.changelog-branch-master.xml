@@ -5,6 +5,7 @@
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <include file="db/changelog/branch-type.xml"/>
+    <include file="db/changelog/branch_code.xml"/>
     <include file="db/changelog/branch.xml"/>
     <include file="/db/changelog/branch-employee.xml"/>
     <include file="db/changelog/branch-employee-category.xml"/>

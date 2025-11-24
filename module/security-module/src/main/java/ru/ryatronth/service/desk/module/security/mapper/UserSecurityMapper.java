@@ -1,59 +1,55 @@
 package ru.ryatronth.service.desk.module.security.mapper;
 
+import java.util.List;
+import java.util.Map;
+import ru.ryatronth.service.desk.data.persona.model.user.User;
+import ru.ryatronth.service.desk.dto.keycloak.KeycloakGroupRepresentation;
+import ru.ryatronth.service.desk.dto.keycloak.KeycloakUserRepresentation;
+
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.springframework.security.oauth2.jwt.Jwt;
-import ru.ryatronth.service.desk.data.persona.model.user.User;
-import ru.ryatronth.service.desk.dto.persona.UserDto;
-
-import java.util.List;
-import java.util.Map;
 
 @Mapper(componentModel = "spring")
 public interface UserSecurityMapper {
 
-    UserDto toDto(User entity);
-
-    User toEntity(UserDto dto);
-
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateUserFromDto(UserDto dto, @MappingTarget User entity);
-
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    default void updateUserFromJwt(Jwt jwt, @MappingTarget User user) {
-        if (jwt == null) {
+    default void updateUserFromKeycloak(KeycloakUserRepresentation kcUser,
+                                        List<KeycloakGroupRepresentation> groups,
+                                        @MappingTarget User user) {
+        if (kcUser == null) {
             return;
         }
 
-        if (jwt.getClaimAsString("email") != null) {
-            user.setEmail(jwt.getClaimAsString("email"));
+        user.setEnabled(kcUser.enabled() == null || kcUser.enabled());
+        user.setEmail(kcUser.email());
+        user.setFirstName(kcUser.firstName());
+        user.setLastName(kcUser.lastName());
+
+        Map<String, List<String>> attrs = kcUser.attributes();
+        if (attrs != null) {
+            setIfNotNull(user::setPatronymic, getAttr(attrs, "patronymic"));
+            setIfNotNull(user::setBranch, getAttr(attrs, "branch"));
+            setIfNotNull(user::setWorkplace, getAttr(attrs, "workplace"));
         }
 
-        if (jwt.getClaimAsString("given_name") != null) {
-            user.setFirstName(jwt.getClaimAsString("given_name"));
-        }
+        if (groups != null && !groups.isEmpty()) {
+            groups.stream()
+                    .filter(UserSecurityMapper::isBranchGroup)
+                    .map(KeycloakGroupRepresentation::name)
+                    .findFirst().ifPresent(user::setBranch);
 
-        if (jwt.getClaimAsString("family_name") != null) {
-            user.setLastName(jwt.getClaimAsString("family_name"));
-        }
+            List<String> serviceDeskRoles = groups.stream()
+                    .filter(UserSecurityMapper::isServiceDeskGroup)
+                    .map(KeycloakGroupRepresentation::name)
+                    .toList();
 
-        if (jwt.getClaimAsString("patronymic") != null) {
-            user.setPatronymic(jwt.getClaimAsString("patronymic"));
-        }
+            if (!serviceDeskRoles.isEmpty()) {
+                user.setRoles(serviceDeskRoles);
+            }
 
-        if (jwt.getClaimAsString("address") != null) {
-            user.setAddress(jwt.getClaimAsString("address"));
-        }
-
-        if (jwt.getClaimAsString("workplace") != null) {
-            user.setWorkplace(jwt.getClaimAsString("workplace"));
-        }
-
-        List<String> roles = extractRoles(jwt);
-        if (roles != null && !roles.isEmpty()) {
-            user.setRoles(roles);
         }
     }
 
@@ -68,6 +64,35 @@ public interface UserSecurityMapper {
             return list.stream().map(Object::toString).toList();
         }
         return List.of();
+    }
+
+    private static String getAttr(Map<String, List<String>> attrs, String key) {
+        List<String> values = attrs.get(key);
+        if (values == null || values.isEmpty()) {
+            return null;
+        }
+        return values.get(0);
+    }
+
+    private static boolean isBranchGroup(KeycloakGroupRepresentation group) {
+        String path = group.path();
+        return path != null && path.startsWith("/branch/");
+    }
+
+    private static boolean isServiceDeskGroup(KeycloakGroupRepresentation group) {
+        String path = group.path();
+        return path != null && path.startsWith("/service_desk/");
+    }
+
+    @FunctionalInterface
+    interface Setter<T> {
+        void accept(T value);
+    }
+
+    private static <T> void setIfNotNull(Setter<T> setter, T value) {
+        if (value != null) {
+            setter.accept(value);
+        }
     }
 
 }

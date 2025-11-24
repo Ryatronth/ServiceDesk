@@ -41,6 +41,18 @@
 
         <dependency>
             <groupId>ru.ryatronth.service.desk</groupId>
+            <artifactId>branch-data</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.ryatronth.service.desk</groupId>
+            <artifactId>branch-dto</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ru.ryatronth.service.desk</groupId>
             <artifactId>persona-data</artifactId>
             <version>${revision}</version>
         </dependency>

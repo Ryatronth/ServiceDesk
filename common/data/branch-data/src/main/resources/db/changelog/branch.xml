@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
@@ -15,21 +16,27 @@
                 <constraints nullable="false"/>
             </column>
 
+            <column name="code_id" type="UUID">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
             <column name="name" type="TEXT">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="address" type="TEXT"/>
-
-            <column name="manager_id" type="UUID">
+            <column name="area" type="TEXT">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="created_at" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP">
+            <column name="address" type="TEXT">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="updated_at" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP">
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -47,6 +54,14 @@
                 baseColumnNames="type_id"
                 constraintName="fk_branch_type"
                 referencedTableName="branch_type"
+                referencedColumnNames="id"
+                onDelete="RESTRICT"/>
+
+        <addForeignKeyConstraint
+                baseTableName="branch"
+                baseColumnNames="code_id"
+                constraintName="fk_branch_code"
+                referencedTableName="branch_code"
                 referencedColumnNames="id"
                 onDelete="RESTRICT"/>
 
