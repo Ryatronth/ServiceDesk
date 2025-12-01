@@ -30,7 +30,7 @@ public class BranchController implements BranchApiV1 {
     }
 
     @Override
-    public ResponseEntity<Page<BranchDto>> getByFilters(Pageable pageable) {
+    public ResponseEntity<Page<ShortBranchDto>> getByFilters(Pageable pageable) {
         return ResponseEntity.ok(branchService.getByFilters(pageable));
     }
 

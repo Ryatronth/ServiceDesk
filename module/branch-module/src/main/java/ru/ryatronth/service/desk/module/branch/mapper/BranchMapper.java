@@ -9,6 +9,7 @@ import ru.ryatronth.service.desk.dto.branch.BranchCodeDto;
 import ru.ryatronth.service.desk.dto.branch.BranchDto;
 import ru.ryatronth.service.desk.dto.branch.BranchParentDto;
 import ru.ryatronth.service.desk.dto.branch.BranchTypeDto;
+import ru.ryatronth.service.desk.dto.branch.ShortBranchDto;
 
 @Mapper(componentModel = "spring")
 public interface BranchMapper {
@@ -17,6 +18,8 @@ public interface BranchMapper {
     @Mapping(source = "type", target = "type")
     @Mapping(source = "code", target = "code")
     BranchDto toDto(Branch entity);
+
+    ShortBranchDto toShortDto(Branch entity);
 
     BranchParentDto toParentDto(Branch entity);
 

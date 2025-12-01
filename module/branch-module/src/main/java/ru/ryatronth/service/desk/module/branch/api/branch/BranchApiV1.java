@@ -10,6 +10,7 @@ import java.util.UUID;
 import ru.ryatronth.service.desk.dto.branch.BranchCodeDto;
 import ru.ryatronth.service.desk.dto.branch.BranchDto;
 import ru.ryatronth.service.desk.dto.branch.CreateBranchDto;
+import ru.ryatronth.service.desk.dto.branch.ShortBranchDto;
 import ru.ryatronth.service.desk.dto.branch.UpdateBranchDto;
 
 import org.springdoc.core.annotations.ParameterObject;
@@ -51,7 +52,7 @@ public interface BranchApiV1 {
             description = "Список филиалов",
             content = @Content(schema = @Schema(implementation = BranchDto.class)))
     @GetMapping
-    ResponseEntity<Page<BranchDto>> getByFilters(
+    ResponseEntity<Page<ShortBranchDto>> getByFilters(
             @ParameterObject Pageable pageable);
 
     @Operation(summary = "Создать новый филиал",

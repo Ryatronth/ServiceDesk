@@ -12,6 +12,7 @@ import ru.ryatronth.service.desk.data.branch.model.type.BranchTypeRepository;
 import ru.ryatronth.service.desk.dto.branch.BranchCodeDto;
 import ru.ryatronth.service.desk.dto.branch.BranchDto;
 import ru.ryatronth.service.desk.dto.branch.CreateBranchDto;
+import ru.ryatronth.service.desk.dto.branch.ShortBranchDto;
 import ru.ryatronth.service.desk.dto.branch.UpdateBranchDto;
 import ru.ryatronth.service.desk.module.branch.mapper.BranchMapper;
 
@@ -35,15 +36,15 @@ public class BranchService {
 
     @Transactional(readOnly = true)
     public BranchDto getById(UUID id) {
-        Branch branch = branchRepository.findById(id)
+        Branch branch = branchRepository.findFetchTypeAndParentAndCode(id)
                 .orElseThrow(() -> new EntityNotFoundException("Branch not found: " + id));
         return branchMapper.toDto(branch);
     }
 
     @Transactional(readOnly = true)
-    public Page<BranchDto> getByFilters(Pageable pageable) {
+    public Page<ShortBranchDto> getByFilters(Pageable pageable) {
         return branchRepository.findAll(pageable)
-                .map(branchMapper::toDto);
+                .map(branchMapper::toShortDto);
     }
 
     @Transactional

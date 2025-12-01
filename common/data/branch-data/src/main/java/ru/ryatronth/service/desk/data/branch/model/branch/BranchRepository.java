@@ -12,11 +12,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BranchRepository extends JpaRepository<Branch, UUID> {
 
-    @EntityGraph(attributePaths = "type, parent")
+    @EntityGraph(attributePaths = "type, parent, code")
     @Query("""
             FROM Branch b
             WHERE b.id = :id
             """)
-    Optional<Branch> findFetchTypeAndParent(@Param("id") UUID id);
+    Optional<Branch> findFetchTypeAndParentAndCode(@Param("id") UUID id);
 
 }
