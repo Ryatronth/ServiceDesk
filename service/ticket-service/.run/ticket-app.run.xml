@@ -9,7 +9,7 @@
       <env name="DB_URL" value="jdbc:postgresql://localhost:5432" />
       <env name="DB_USERNAME" value="postgres" />
       <env name="KEYCLOAK_CLIENT_ID" value="service_desk" />
-      <env name="KEYCLOAK_CLIENT_SECRET" value="o4NxrAMXTbwebDs5TmLl8Tuu5fAJDK51" />
+      <env name="KEYCLOAK_CLIENT_SECRET" value="GzoRfRMheJTc0TFBEFEBFQ2IqnrcNJVe" />
       <env name="KEYCLOAK_HOST" value="http://localhost" />
       <env name="KEYCLOAK_PORT" value="8080" />
       <env name="KEYCLOAK_REALM" value="ServiceDesk" />

@@ -31,7 +31,6 @@ public interface UserSecurityMapper {
         Map<String, List<String>> attrs = kcUser.attributes();
         if (attrs != null) {
             setIfNotNull(user::setPatronymic, getAttr(attrs, "patronymic"));
-            setIfNotNull(user::setBranch, getAttr(attrs, "branch"));
             setIfNotNull(user::setWorkplace, getAttr(attrs, "workplace"));
         }
 

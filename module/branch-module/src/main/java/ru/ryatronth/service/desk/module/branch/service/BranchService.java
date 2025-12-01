@@ -9,6 +9,7 @@ import ru.ryatronth.service.desk.data.branch.model.code.BranchCode;
 import ru.ryatronth.service.desk.data.branch.model.code.BranchCodeRepository;
 import ru.ryatronth.service.desk.data.branch.model.type.BranchType;
 import ru.ryatronth.service.desk.data.branch.model.type.BranchTypeRepository;
+import ru.ryatronth.service.desk.dto.branch.BranchCodeDto;
 import ru.ryatronth.service.desk.dto.branch.BranchDto;
 import ru.ryatronth.service.desk.dto.branch.CreateBranchDto;
 import ru.ryatronth.service.desk.dto.branch.UpdateBranchDto;
@@ -27,6 +28,10 @@ public class BranchService {
     private final BranchTypeRepository branchTypeRepository;
     private final BranchCodeRepository branchCodeRepository;
     private final BranchMapper branchMapper;
+
+    public Page<BranchCodeDto> getCodes(Pageable pageable) {
+        return branchCodeRepository.findAll(pageable).map(branchMapper::toDto);
+    }
 
     @Transactional(readOnly = true)
     public BranchDto getById(UUID id) {

@@ -20,8 +20,13 @@ public class BranchController implements BranchApiV1 {
     private final BranchService branchService;
 
     @Override
+    public ResponseEntity<Page<BranchCodeDto>> getBranchCodes(Pageable pageable) {
+        return ResponseEntity.ok(branchService.getCodes(pageable));
+    }
+
+    @Override
     public ResponseEntity<BranchDto> getById(UUID branchId) {
-        return null;
+        return ResponseEntity.ok(branchService.getById(branchId));
     }
 
     @Override

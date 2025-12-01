@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.UUID;
+import ru.ryatronth.service.desk.dto.branch.BranchCodeDto;
 import ru.ryatronth.service.desk.dto.branch.BranchDto;
 import ru.ryatronth.service.desk.dto.branch.CreateBranchDto;
 import ru.ryatronth.service.desk.dto.branch.UpdateBranchDto;
@@ -26,6 +27,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Tag(name = "Branches", description = "Управление филиалами и сотрудниками филиалов")
 @RequestMapping("/api/v1/branches")
 public interface BranchApiV1 {
+
+    @Operation(summary = "Получить коды филиалов",
+            description = "Возвращает информацию о кодах филиалов, заведенных в KK")
+    @ApiResponse(responseCode = "200",
+            description = "Информация о кодах",
+            content = @Content(schema = @Schema(implementation = BranchCodeDto.class)))
+    @GetMapping("/codes")
+    ResponseEntity<Page<BranchCodeDto>> getBranchCodes(@ParameterObject Pageable pageable);
 
     @Operation(summary = "Получить филиал по ID",
             description = "Возвращает информацию о филиале, включая сотрудников и контакты.")
