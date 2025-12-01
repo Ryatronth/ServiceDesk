@@ -50,7 +50,7 @@ public interface BranchApiV1 {
             description = "Возвращает список филиалов по фильтрам (если указаны).")
     @ApiResponse(responseCode = "200",
             description = "Список филиалов",
-            content = @Content(schema = @Schema(implementation = BranchDto.class)))
+            content = @Content(schema = @Schema(implementation = ShortBranchDto.class)))
     @GetMapping
     ResponseEntity<Page<ShortBranchDto>> getByFilters(
             @ParameterObject Pageable pageable);
