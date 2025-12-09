@@ -8,7 +8,7 @@ import ru.ryatronth.service.desk.data.branch.model.type.BranchType;
 import ru.ryatronth.service.desk.dto.branch.BranchCodeDto;
 import ru.ryatronth.service.desk.dto.branch.BranchDto;
 import ru.ryatronth.service.desk.dto.branch.BranchParentDto;
-import ru.ryatronth.service.desk.dto.branch.BranchTypeDto;
+import ru.ryatronth.service.desk.dto.type.BranchTypeDto;
 import ru.ryatronth.service.desk.dto.branch.ShortBranchDto;
 
 @Mapper(componentModel = "spring")

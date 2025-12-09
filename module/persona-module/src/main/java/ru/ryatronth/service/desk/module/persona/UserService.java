@@ -1,20 +1,18 @@
 package ru.ryatronth.service.desk.module.persona;
 
 import jakarta.persistence.EntityNotFoundException;
-
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ru.ryatronth.service.desk.data.persona.model.user.User;
 import ru.ryatronth.service.desk.data.persona.model.user.UserRepository;
+import ru.ryatronth.service.desk.data.persona.model.user.UserSpecificationBuilder;
 import ru.ryatronth.service.desk.dto.persona.UserDto;
 
-import org.apache.commons.lang3.function.Functions;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -52,8 +50,17 @@ public class UserService {
         ));
     }
 
-    public Page<UserDto> getByBranchCode(String branchCode, Pageable pageable) {
-        return userRepository.findByBranch(branchCode, pageable).map(userMapper::toDto);
+    public Page<UserDto> getByFilters(UserFilterDto filter, Pageable pageable) {
+        Specification<User> spec = new UserSpecificationBuilder()
+                .branch(filter.getBranch())
+                .firstName(filter.getFirstName())
+                .lastName(filter.getLastName())
+                .patronymic(filter.getPatronymic())
+                .phone(filter.getPhone())
+                .email(filter.getEmail())
+                .build();
+
+        return userRepository.findAll(spec, pageable).map(userMapper::toDto);
     }
 
     public Page<UserDto> getPage(Pageable pageable) {

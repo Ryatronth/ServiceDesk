@@ -15,9 +15,9 @@ import org.springframework.stereotype.Component;
 public class BranchEmployeeMapper {
 
     public BranchEmployeeDto mapToDto(UUID branchId,
-                                                    UserDto user,
-                                                    Map<UUID, List<BranchEmployeeCategory>> categoriesByUserId,
-                                                    Map<UUID, TicketCategoryDto> ticketCategoriesById) {
+                                      UserDto user,
+                                      Map<UUID, List<BranchEmployeeCategory>> categoriesByUserId,
+                                      Map<UUID, TicketCategoryDto> ticketCategoriesById) {
 
         List<BranchEmployeeCategory> userCategories =
                 categoriesByUserId.getOrDefault(user.id(), List.of());

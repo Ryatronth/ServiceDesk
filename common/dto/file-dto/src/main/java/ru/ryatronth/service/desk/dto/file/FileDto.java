@@ -1,13 +1,9 @@
 package ru.ryatronth.service.desk.dto.file;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import java.time.Instant;
 import java.util.UUID;
 
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Schema(description = "Информация о файле")
 public record FileDto(@Schema(description = "Идентификатор файла") UUID id,
                       @Schema(description = "Исходное имя файла") String originalName,
@@ -18,4 +14,5 @@ public record FileDto(@Schema(description = "Идентификатор файл
                       @Schema(description = "Presigned URL для скачивания") String url,
                       @Schema(description = "Статус файла") FileClientStatus status,
                       @Schema(description = "Временная метка создания") Instant createdAt,
-                      @Schema(description = "Временная метка обновления") Instant updatedAt) {}
+                      @Schema(description = "Временная метка обновления") Instant updatedAt) {
+}

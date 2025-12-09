@@ -30,6 +30,7 @@ public interface UserSecurityMapper {
 
         Map<String, List<String>> attrs = kcUser.attributes();
         if (attrs != null) {
+            setIfNotNull(user::setPhone, getAttr(attrs, "phone"));
             setIfNotNull(user::setPatronymic, getAttr(attrs, "patronymic"));
             setIfNotNull(user::setWorkplace, getAttr(attrs, "workplace"));
         }
@@ -52,7 +53,6 @@ public interface UserSecurityMapper {
         }
     }
 
-    @SuppressWarnings("unchecked")
     private static List<String> extractRoles(Jwt jwt) {
         Map<String, Object> realmAccess = jwt.getClaim("realm_access");
         if (realmAccess == null) {

@@ -20,6 +20,7 @@ import ru.ryatronth.service.desk.dto.employee.BranchEmployeeDto;
 import ru.ryatronth.service.desk.dto.persona.UserDto;
 import ru.ryatronth.service.desk.dto.ticket.TicketCategoryDto;
 import ru.ryatronth.service.desk.module.branch.mapper.BranchEmployeeMapper;
+import ru.ryatronth.service.desk.module.persona.UserFilterDto;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -38,13 +39,14 @@ public class BranchEmployeeService {
     private final TicketCategoryAdapter ticketCategoryAdapter;
 
     @Transactional(readOnly = true)
-    public Page<BranchEmployeeDto> getEmployees(UUID branchId, Pageable pageable) {
+    public Page<BranchEmployeeDto> getEmployees(UUID branchId, UserFilterDto filter, Pageable pageable) {
         Branch branch = branchRepository.findById(branchId)
                 .orElseThrow(() -> new EntityNotFoundException("Branch not found: " + branchId));
 
         String branchCode = branch.getCode().getCode();
+        filter.setBranch(branchCode);
 
-        Page<UserDto> usersPage = personaAdapter.getByBranchCode(branchCode, pageable);
+        Page<UserDto> usersPage = personaAdapter.getByFilters(filter, pageable);
         List<UserDto> users = usersPage.getContent();
 
         if (users.isEmpty()) {

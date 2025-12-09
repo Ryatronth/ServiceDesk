@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.ryatronth.service.desk.dto.type.BranchTypeDto;
 
 @Getter
 @Setter

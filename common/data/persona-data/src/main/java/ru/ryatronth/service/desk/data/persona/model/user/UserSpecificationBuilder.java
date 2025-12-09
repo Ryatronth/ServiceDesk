@@ -1,7 +1,6 @@
 package ru.ryatronth.service.desk.data.persona.model.user;
 
 import jakarta.persistence.metamodel.SingularAttribute;
-import java.util.UUID;
 
 import org.springframework.data.jpa.domain.Specification;
 
@@ -23,9 +22,30 @@ public class UserSpecificationBuilder {
         return this;
     }
 
+    public UserSpecificationBuilder patronymic(String patronymic) {
+        if (patronymic != null && !patronymic.isBlank()) {
+            spec = spec.and(likeIgnoreCase(User_.patronymic, patronymic));
+        }
+        return this;
+    }
+
+    public UserSpecificationBuilder phone(String phone) {
+        if (phone != null && !phone.isBlank()) {
+            spec = spec.and(likeIgnoreCase(User_.phone, phone));
+        }
+        return this;
+    }
+
     public UserSpecificationBuilder workplace(String workplace) {
         if (workplace != null && !workplace.isBlank()) {
-            spec = spec.and(likeIgnoreCase(User_.workplace, workplace));
+            spec = spec.and(equal(User_.workplace, workplace));
+        }
+        return this;
+    }
+
+    public UserSpecificationBuilder email(String email) {
+        if (email != null && !email.isBlank()) {
+            spec = spec.and(equal(User_.email, email));
         }
         return this;
     }

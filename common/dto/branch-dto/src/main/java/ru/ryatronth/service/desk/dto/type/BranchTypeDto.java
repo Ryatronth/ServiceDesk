@@ -1,4 +1,4 @@
-package ru.ryatronth.service.desk.dto.branch;
+package ru.ryatronth.service.desk.dto.type;
 
 import java.util.UUID;
 import lombok.AllArgsConstructor;

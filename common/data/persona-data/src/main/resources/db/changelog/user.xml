@@ -24,6 +24,10 @@
 
             <column name="patronymic" type="TEXT"/>
 
+            <column name="phone" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+
             <column name="workplace" type="TEXT">
                 <constraints nullable="false"/>
             </column>

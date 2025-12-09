@@ -5,6 +5,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import ru.ryatronth.service.desk.data.branch.model.branch.Branch;
 import ru.ryatronth.service.desk.data.branch.model.branch.BranchRepository;
+import ru.ryatronth.service.desk.data.branch.model.branch.BranchSpecificationBuilder;
 import ru.ryatronth.service.desk.data.branch.model.code.BranchCode;
 import ru.ryatronth.service.desk.data.branch.model.code.BranchCodeRepository;
 import ru.ryatronth.service.desk.data.branch.model.type.BranchType;
@@ -14,10 +15,12 @@ import ru.ryatronth.service.desk.dto.branch.BranchDto;
 import ru.ryatronth.service.desk.dto.branch.CreateBranchDto;
 import ru.ryatronth.service.desk.dto.branch.ShortBranchDto;
 import ru.ryatronth.service.desk.dto.branch.UpdateBranchDto;
+import ru.ryatronth.service.desk.module.branch.api.branch.filter.BranchFilterDto;
 import ru.ryatronth.service.desk.module.branch.mapper.BranchMapper;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,10 +45,17 @@ public class BranchService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ShortBranchDto> getByFilters(Pageable pageable) {
-        return branchRepository.findAll(pageable)
-                .map(branchMapper::toShortDto);
+    public Page<ShortBranchDto> getByFilters(BranchFilterDto filter, Pageable pageable) {
+        Specification<Branch> spec = new BranchSpecificationBuilder()
+                .area(filter.getArea())
+                .name(filter.getName())
+                .address(filter.getAddress())
+                .build();
+
+        Page<Branch> page = branchRepository.findAll(spec, pageable);
+        return page.map(branchMapper::toShortDto);
     }
+
 
     @Transactional
     public BranchDto create(CreateBranchDto dto) {
@@ -61,14 +71,9 @@ public class BranchService {
         BranchCode branchCode = branchCodeRepository.findById(dto.getCodeId())
                 .orElseThrow(() -> new EntityNotFoundException("BranchCode not found: " + dto.getCodeId()));
 
-        Branch branch = Branch.builder()
-                .parent(parent)
-                .type(type)
-                .code(branchCode)
-                .name(dto.getName())
-                .area(dto.getArea())
-                .address(dto.getAddress())
-                .build();
+        Branch branch =
+                Branch.builder().parent(parent).type(type).code(branchCode).name(dto.getName()).area(dto.getArea())
+                        .address(dto.getAddress()).build();
 
         Branch saved = branchRepository.save(branch);
         return branchMapper.toDto(saved);
@@ -76,8 +81,8 @@ public class BranchService {
 
     @Transactional
     public BranchDto update(UUID id, UpdateBranchDto dto) {
-        Branch branch = branchRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Branch not found: " + id));
+        Branch branch =
+                branchRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Branch not found: " + id));
 
         if (dto.getParentId() != null) {
             Branch parent = branchRepository.findById(dto.getParentId())
