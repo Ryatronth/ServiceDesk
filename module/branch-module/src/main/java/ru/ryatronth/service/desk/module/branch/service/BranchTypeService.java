@@ -36,7 +36,7 @@ public class BranchTypeService {
 
     @Transactional
     public BranchTypeDto create(CreateBranchTypeDto dto) {
-        BranchType type = BranchType.builder().name(dto.getName()).build();
+        BranchType type = BranchType.builder().name(dto.name()).build();
 
         BranchType saved = branchTypeRepository.save(type);
         return branchTypeMapper.toDto(saved);
@@ -47,8 +47,8 @@ public class BranchTypeService {
         BranchType type = branchTypeRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("BranchType not found: " + id));
 
-        if (dto.getName() != null) {
-            type.setName(dto.getName());
+        if (dto.name() != null) {
+            type.setName(dto.name());
         }
 
         BranchType saved = branchTypeRepository.save(type);
