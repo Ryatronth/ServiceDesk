@@ -9,23 +9,21 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.Duration;
+import java.time.Instant;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.ryatronth.service.desk.data.ticket.model.ticket.constant.TicketPriority;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.envers.Audited;
 import org.hibernate.type.SqlTypes;
 
-import java.time.Instant;
-import java.util.UUID;
-import ru.ryatronth.service.desk.data.ticket.model.ticket.constant.TicketPriority;
-
-@Audited
 @Table(name = "ticket_category")
 @Entity
 @Getter
@@ -40,10 +38,7 @@ public class TicketCategory {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "code", nullable = false, unique = true)
-    private String code;
-
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     @Column(name = "description", nullable = false)

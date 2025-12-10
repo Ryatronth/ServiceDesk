@@ -1,4 +1,4 @@
-package ru.ryatronth.service.desk.module.ticket.service;
+package ru.ryatronth.service.desk.module.ticket.service.solver;
 
 import org.springframework.stereotype.Service;
 

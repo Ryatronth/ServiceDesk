@@ -1,18 +1,10 @@
 package ru.ryatronth.service.desk.dto.type;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class CreateBranchTypeDto {
+@Schema(description = "Данные для создания типа филиала")
+public record CreateBranchTypeDto(
 
-    private String name;
-
-}
+        @Schema(description = "Название типа филиала", example = "Головной офис")
+        String name
+) {}

@@ -1,21 +1,14 @@
 package ru.ryatronth.service.desk.dto.branch;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class BranchCodeDto {
+@Schema(description = "Код филиала")
+public record BranchCodeDto(
 
-    private UUID id;
+        @Schema(description = "ID кода филиала", example = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
+        UUID id,
 
-    private String code;
-
-}
+        @Schema(description = "Уникальный код филиала", example = "BR-001")
+        String code
+) {}

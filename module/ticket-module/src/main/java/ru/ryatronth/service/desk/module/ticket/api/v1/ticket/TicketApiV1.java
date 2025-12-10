@@ -1,4 +1,4 @@
-package ru.ryatronth.service.desk.module.ticket.api.v1;
+package ru.ryatronth.service.desk.module.ticket.api.v1.ticket;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.ryatronth.service.desk.dto.ticket.TicketCreateDto;
-import ru.ryatronth.service.desk.dto.ticket.TicketDto;
-import ru.ryatronth.service.desk.dto.ticket.TicketUpdateDto;
+import ru.ryatronth.service.desk.dto.ticket.ticket.TicketCreateDto;
+import ru.ryatronth.service.desk.dto.ticket.ticket.TicketDto;
+import ru.ryatronth.service.desk.dto.ticket.ticket.TicketUpdateDto;
 
 import java.util.UUID;
 

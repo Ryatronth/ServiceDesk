@@ -12,44 +12,44 @@ import ru.ryatronth.service.desk.dto.branch.BranchDto;
 import ru.ryatronth.service.desk.dto.branch.CreateBranchDto;
 import ru.ryatronth.service.desk.dto.branch.ShortBranchDto;
 import ru.ryatronth.service.desk.dto.branch.UpdateBranchDto;
+import ru.ryatronth.service.desk.module.branch.api.branch.filter.BranchFilterDto;
+import ru.ryatronth.service.desk.module.branch.api.branch.filter.BranchParentFilterDto;
 
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Branches", description = "Управление филиалами и сотрудниками филиалов")
 @RequestMapping("/api/v1/branches")
 public interface BranchApiV1 {
 
-    @Operation(summary = "Получить коды филиалов", description = "Возвращает информацию о кодах филиалов, заведенных в KK")
+    @Operation(summary = "Получить коды филиалов", description = "Возвращает информацию о кодах филиалов, заведённых в системе")
     @ApiResponse(responseCode = "200", description = "Информация о кодах", content = @Content(schema = @Schema(implementation = BranchCodeDto.class)))
     @GetMapping("/codes")
     ResponseEntity<Page<BranchCodeDto>> getBranchCodes(@ParameterObject Pageable pageable);
 
-    @Operation(summary = "Получить филиал по ID", description = "Возвращает информацию о филиале, включая сотрудников и контакты.")
+    @Operation(summary = "Получить филиал по ID", description = "Возвращает информацию о филиале, включая тип, код и родительский филиал.")
     @ApiResponse(responseCode = "200", description = "Информация о филиале", content = @Content(schema = @Schema(implementation = BranchDto.class)))
     @GetMapping("/{branchId}")
     ResponseEntity<BranchDto> getById(
             @Parameter(description = "ID филиала", required = true) @PathVariable UUID branchId);
 
+    @Operation(summary = "Получить список филиалов, подходящих для назначения как родитель", description = "Возвращает список филиалов по фильтрам, исключая текущий филиал.")
+    @ApiResponse(responseCode = "200", description = "Список филиалов", content = @Content(schema = @Schema(implementation = ShortBranchDto.class)))
+    @GetMapping("/{branchId}/parent-candidates")
+    ResponseEntity<Page<ShortBranchDto>> getForParent(
+            @Parameter(description = "ID текущего филиала", required = true) @PathVariable UUID branchId,
+            @ParameterObject BranchParentFilterDto filter, @ParameterObject Pageable pageable);
+
     @Operation(summary = "Получить список филиалов", description = "Возвращает список филиалов по фильтрам (если указаны).")
     @ApiResponse(responseCode = "200", description = "Список филиалов", content = @Content(schema = @Schema(implementation = ShortBranchDto.class)))
     @GetMapping
-    ResponseEntity<Page<ShortBranchDto>> getByFilters(@RequestParam(required = false) String name,
-                                                      @RequestParam(required = false) String area,
-                                                      @RequestParam(required = false) String address,
+    ResponseEntity<Page<ShortBranchDto>> getByFilters(@ParameterObject BranchFilterDto filter,
                                                       @ParameterObject Pageable pageable);
 
-    @Operation(summary = "Создать новый филиал", description = "Создаёт филиал с основными данными — названием, адресом и контактами.")
+    @Operation(summary = "Создать новый филиал", description = "Создаёт филиал с основными данными — названием, типом, кодом, областью и адресом.")
     @ApiResponse(responseCode = "201", description = "Филиал успешно создан", content = @Content(schema = @Schema(implementation = BranchDto.class)))
     @PostMapping
     ResponseEntity<BranchDto> create(
@@ -64,9 +64,8 @@ public interface BranchApiV1 {
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Данные для обновления филиала", required = true, content = @Content(schema = @Schema(implementation = UpdateBranchDto.class)))
             @RequestBody UpdateBranchDto dto);
 
-    @Operation(summary = "Удалить филиал", description = "Удаляет филиал и всех его сотрудников.")
+    @Operation(summary = "Удалить филиал", description = "Удаляет филиал.")
     @ApiResponse(responseCode = "204", description = "Филиал удалён")
     @DeleteMapping("/{branchId}")
     ResponseEntity<Void> delete(@Parameter(description = "ID филиала", required = true) @PathVariable UUID branchId);
-
 }

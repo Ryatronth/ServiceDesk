@@ -16,6 +16,7 @@ import ru.ryatronth.service.desk.dto.branch.CreateBranchDto;
 import ru.ryatronth.service.desk.dto.branch.ShortBranchDto;
 import ru.ryatronth.service.desk.dto.branch.UpdateBranchDto;
 import ru.ryatronth.service.desk.module.branch.api.branch.filter.BranchFilterDto;
+import ru.ryatronth.service.desk.module.branch.api.branch.filter.BranchParentFilterDto;
 import ru.ryatronth.service.desk.module.branch.mapper.BranchMapper;
 
 import org.springframework.data.domain.Page;
@@ -45,35 +46,39 @@ public class BranchService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ShortBranchDto> getByFilters(BranchFilterDto filter, Pageable pageable) {
-        Specification<Branch> spec = new BranchSpecificationBuilder()
-                .area(filter.getArea())
-                .name(filter.getName())
-                .address(filter.getAddress())
-                .build();
+    public Page<ShortBranchDto> getForParent(BranchParentFilterDto filter, Pageable pageable) {
+        Specification<Branch> spec =
+                new BranchSpecificationBuilder().name(filter.name()).area(filter.area()).address(filter.address())
+                        .exclude(filter.exclude()).build();
 
-        Page<Branch> page = branchRepository.findAll(spec, pageable);
-        return page.map(branchMapper::toShortDto);
+        return branchRepository.findAll(spec, pageable).map(branchMapper::toShortDto);
     }
 
+    @Transactional(readOnly = true)
+    public Page<ShortBranchDto> getByFilters(BranchFilterDto filter, Pageable pageable) {
+        Specification<Branch> spec =
+                new BranchSpecificationBuilder().name(filter.name()).area(filter.area()).address(filter.address())
+                        .build();
+
+        return branchRepository.findAll(spec, pageable).map(branchMapper::toShortDto);
+    }
 
     @Transactional
     public BranchDto create(CreateBranchDto dto) {
         Branch parent = null;
-        if (dto.getParentId() != null) {
-            parent = branchRepository.findById(dto.getParentId())
-                    .orElseThrow(() -> new EntityNotFoundException("Parent branch not found: " + dto.getParentId()));
+        if (dto.parentId() != null) {
+            parent = branchRepository.findById(dto.parentId())
+                    .orElseThrow(() -> new EntityNotFoundException("Parent branch not found: " + dto.parentId()));
         }
 
-        BranchType type = branchTypeRepository.findById(dto.getTypeId())
-                .orElseThrow(() -> new EntityNotFoundException("BranchType not found: " + dto.getTypeId()));
+        BranchType type = branchTypeRepository.findById(dto.typeId())
+                .orElseThrow(() -> new EntityNotFoundException("BranchType not found: " + dto.typeId()));
 
-        BranchCode branchCode = branchCodeRepository.findById(dto.getCodeId())
-                .orElseThrow(() -> new EntityNotFoundException("BranchCode not found: " + dto.getCodeId()));
+        BranchCode branchCode = branchCodeRepository.findById(dto.codeId())
+                .orElseThrow(() -> new EntityNotFoundException("BranchCode not found: " + dto.codeId()));
 
-        Branch branch =
-                Branch.builder().parent(parent).type(type).code(branchCode).name(dto.getName()).area(dto.getArea())
-                        .address(dto.getAddress()).build();
+        Branch branch = Branch.builder().parent(parent).type(type).code(branchCode).name(dto.name()).area(dto.area())
+                .address(dto.address()).build();
 
         Branch saved = branchRepository.save(branch);
         return branchMapper.toDto(saved);
@@ -84,34 +89,34 @@ public class BranchService {
         Branch branch =
                 branchRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Branch not found: " + id));
 
-        if (dto.getParentId() != null) {
-            Branch parent = branchRepository.findById(dto.getParentId())
-                    .orElseThrow(() -> new EntityNotFoundException("Parent branch not found: " + dto.getParentId()));
+        if (dto.parentId() != null) {
+            Branch parent = branchRepository.findById(dto.parentId())
+                    .orElseThrow(() -> new EntityNotFoundException("Parent branch not found: " + dto.parentId()));
             branch.setParent(parent);
         }
 
-        if (dto.getTypeId() != null) {
-            BranchType type = branchTypeRepository.findById(dto.getTypeId())
-                    .orElseThrow(() -> new EntityNotFoundException("BranchType not found: " + dto.getTypeId()));
+        if (dto.typeId() != null) {
+            BranchType type = branchTypeRepository.findById(dto.typeId())
+                    .orElseThrow(() -> new EntityNotFoundException("BranchType not found: " + dto.typeId()));
             branch.setType(type);
         }
 
-        if (dto.getCodeId() != null) {
-            BranchCode branchCode = branchCodeRepository.findById(dto.getCodeId())
-                    .orElseThrow(() -> new EntityNotFoundException("BranchCode not found: " + dto.getCodeId()));
+        if (dto.codeId() != null) {
+            BranchCode branchCode = branchCodeRepository.findById(dto.codeId())
+                    .orElseThrow(() -> new EntityNotFoundException("BranchCode not found: " + dto.codeId()));
             branch.setCode(branchCode);
         }
 
-        if (dto.getName() != null) {
-            branch.setName(dto.getName());
+        if (dto.name() != null) {
+            branch.setName(dto.name());
         }
 
-        if (dto.getArea() != null) {
-            branch.setArea(dto.getArea());
+        if (dto.area() != null) {
+            branch.setArea(dto.area());
         }
 
-        if (dto.getAddress() != null) {
-            branch.setAddress(dto.getAddress());
+        if (dto.address() != null) {
+            branch.setAddress(dto.address());
         }
 
         Branch saved = branchRepository.save(branch);
@@ -125,5 +130,4 @@ public class BranchService {
         }
         branchRepository.deleteById(id);
     }
-
 }

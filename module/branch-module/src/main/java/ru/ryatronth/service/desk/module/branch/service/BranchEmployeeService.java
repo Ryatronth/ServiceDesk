@@ -18,7 +18,7 @@ import ru.ryatronth.service.desk.dto.employee.AssignEmployeeCategoryDto;
 import ru.ryatronth.service.desk.dto.employee.BranchEmployeeCategoryDto;
 import ru.ryatronth.service.desk.dto.employee.BranchEmployeeDto;
 import ru.ryatronth.service.desk.dto.persona.UserDto;
-import ru.ryatronth.service.desk.dto.ticket.TicketCategoryDto;
+import ru.ryatronth.service.desk.dto.ticket.category.TicketCategoryDto;
 import ru.ryatronth.service.desk.module.branch.mapper.BranchEmployeeMapper;
 import ru.ryatronth.service.desk.module.persona.UserFilterDto;
 
@@ -85,14 +85,14 @@ public class BranchEmployeeService {
                                                             AssignEmployeeCategoryDto dto) {
         BranchEmployeeCategory entity = BranchEmployeeCategory.builder()
                 .userId(userId)
-                .categoryId(dto.getCategoryId())
+                .categoryId(dto.categoryId())
                 .build();
 
         BranchEmployeeCategory saved = branchEmployeeCategoryRepository.save(entity);
 
         Map<UUID, TicketCategoryDto> catMap =
-                ticketCategoryAdapter.getCategoriesByIds(List.of(dto.getCategoryId()));
-        TicketCategoryDto categoryDto = catMap.get(dto.getCategoryId());
+                ticketCategoryAdapter.getCategoriesByIds(List.of(dto.categoryId()));
+        TicketCategoryDto categoryDto = catMap.get(dto.categoryId());
 
         return BranchEmployeeCategoryDto.builder()
                 .id(saved.getId())

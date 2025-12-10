@@ -1,21 +1,15 @@
 package ru.ryatronth.service.desk.dto.type;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class BranchTypeDto {
+@Schema(description = "Тип филиала")
+public record BranchTypeDto(
 
-    private UUID id;
+        @Schema(description = "ID типа филиала", example = "11111111-1111-1111-1111-111111111111")
+        UUID id,
 
-    private String name;
-
+        @Schema(description = "Название типа филиала", example = "Головной офис")
+        String name
+) {
 }

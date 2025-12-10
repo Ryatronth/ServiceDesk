@@ -1,27 +1,24 @@
 package ru.ryatronth.service.desk.dto.employee;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import ru.ryatronth.service.desk.dto.persona.UserDto;
 
-@Getter
-@Setter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class BranchEmployeeDto {
+@Schema(description = "Сотрудник филиала с назначенными категориями")
+public record BranchEmployeeDto(
 
-    private UUID id;
+        @Schema(description = "ID сотрудника филиала", example = "44444444-4444-4444-4444-444444444444")
+        UUID id,
 
-    private UUID branchId;
+        @Schema(description = "ID филиала, к которому привязан сотрудник", example = "55555555-5555-5555-5555-555555555555")
+        UUID branchId,
 
-    private UserDto user;
+        @Schema(description = "Пользователь, связанный с сотрудником")
+        UserDto user,
 
-    private List<BranchEmployeeCategoryDto> categories;
-
-}
+        @Schema(description = "Категории тикетов, назначенные сотруднику")
+        List<BranchEmployeeCategoryDto> categories
+) {}

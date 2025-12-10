@@ -7,7 +7,7 @@ import ru.ryatronth.service.desk.data.branch.model.category.BranchEmployeeCatego
 import ru.ryatronth.service.desk.dto.employee.BranchEmployeeCategoryDto;
 import ru.ryatronth.service.desk.dto.employee.BranchEmployeeDto;
 import ru.ryatronth.service.desk.dto.persona.UserDto;
-import ru.ryatronth.service.desk.dto.ticket.TicketCategoryDto;
+import ru.ryatronth.service.desk.dto.ticket.category.TicketCategoryDto;
 
 import org.springframework.stereotype.Component;
 

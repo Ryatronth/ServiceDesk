@@ -1,6 +1,8 @@
 package ru.ryatronth.service.desk.data.branch.model.branch;
 
 import jakarta.persistence.metamodel.SingularAttribute;
+import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.jpa.domain.Specification;
 
@@ -29,8 +31,19 @@ public class BranchSpecificationBuilder {
         return this;
     }
 
+    public BranchSpecificationBuilder exclude(List<UUID> toExclude) {
+        if (toExclude != null && !toExclude.isEmpty()) {
+            spec = spec.and(notIn(Branch_.id, toExclude));
+        }
+        return this;
+    }
+
     public Specification<Branch> build() {
         return spec;
+    }
+
+    private static <T> Specification<Branch> notIn(SingularAttribute<Branch, T> field, List<T> values) {
+        return (root, query, cb) -> cb.not(root.get(field).in(values));
     }
 
     private static Specification<Branch> likeIgnoreCase(SingularAttribute<Branch, String> field, String value) {

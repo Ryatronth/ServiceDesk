@@ -1,30 +1,27 @@
 package ru.ryatronth.service.desk.dto.branch;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import ru.ryatronth.service.desk.dto.type.BranchTypeDto;
 
-@Getter
-@Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class BranchParentDto {
+@Schema(description = "Информация о родительском филиале")
+public record BranchParentDto(
 
-    private UUID id;
+        @Schema(description = "ID родительского филиала", example = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb")
+        UUID id,
 
-    private BranchTypeDto type;
+        @Schema(description = "Тип родительского филиала")
+        BranchTypeDto type,
 
-    private BranchCodeDto code;
+        @Schema(description = "Код родительского филиала")
+        BranchCodeDto code,
 
-    private String name;
+        @Schema(description = "Название родительского филиала", example = "Головной офис")
+        String name,
 
-    private String area;
+        @Schema(description = "Регион/область родительского филиала", example = "Москва")
+        String area,
 
-    private String address;
-
-}
+        @Schema(description = "Адрес родительского филиала", example = "г. Москва, ул. Пушкина, д. 1")
+        String address
+) {}
